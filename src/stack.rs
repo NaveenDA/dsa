@@ -1,5 +1,8 @@
 use std::collections::{HashMap, HashSet};
 
+/**
+ * This method is used to check a vec contains duplicates or not
+ */
 pub fn find_duplicate(items: &Vec<i32>) -> bool {
     let mut hash = HashSet::new();
     for i in items {
@@ -11,6 +14,9 @@ pub fn find_duplicate(items: &Vec<i32>) -> bool {
     true
 }
 
+/**
+ * A function to check two string is anagram or not
+ */
 pub fn is_anagram(s: String, t: String) -> bool {
     let mut s_hash = HashMap::new();
     let mut t_hash = HashMap::new();
