@@ -1,11 +1,9 @@
 use std::collections::{HashMap, HashSet};
 
-
-
-pub fn find_duplicate(items: &Vec<i32>)->bool{
+pub fn find_duplicate(items: &Vec<i32>) -> bool {
     let mut hash = HashSet::new();
-    for i in items{
-        if hash.contains(i){
+    for i in items {
+        if hash.contains(i) {
             return false;
         }
         hash.insert(i);
@@ -33,4 +31,19 @@ pub fn is_anagram(s: String, t: String) -> bool {
     }
     // check if the two hashmaps are equal
     s_hash == t_hash
+}
+
+pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
+    let mut num_map:HashMap<i32, i32> = HashMap::new();
+    let num_ref = &nums;
+   
+    for (i,el) in num_ref.into_iter().enumerate() {
+        let current_tagert: i32 = target - el;
+        let got_res = num_map.get(&current_tagert);
+        match got_res {
+            Some(val) => return vec![i as i32, *val],
+            None => num_map.insert( *el, i as i32)
+        };
+    }
+    return vec![];
 }

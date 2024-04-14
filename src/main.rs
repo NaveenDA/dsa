@@ -13,4 +13,7 @@ fn main() {
         "is anagram {}",
         stack::is_anagram(String::from("cat"), String::from("ate"))
     );
+
+    let result = stack::two_sum(vec![0,7,11,15,2], 9);
+    println!("The result of two sum {:#?}", result);
 }
