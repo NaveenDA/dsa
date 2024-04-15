@@ -15,10 +15,19 @@ fn main() {
     );
 
     let result = stack::two_sum(vec![0,7,11,15,2], 9);
-    println!("The result of two sum {:#?}", result);
+    println!("The result of two sum {:?}", result);
 
 
     let input: Vec<String> = vec![String::from("eat"),String::from("tea"),String::from("tan"),String::from("ate"),String::from("nat"),String::from("bat"),];
     let result = stack::group_anagrams(input);
-    println!("The result of the group anagrams is {:#?}", result);
+    println!("The result of the group anagrams is {:?}", result);
+
+    let result = stack::top_k_frequent(vec![1,1,1,2,2,3], 2);
+    println!("The result of the top k frequent {:?}", result);
+
+    let result = stack::top_k_frequent(vec![1], 1);
+    println!("The result of the top k frequent {:?}", result);
+
+    let result = stack::product_except_self(vec![1,2,3,4]);
+    println!("The result of the product except itself is {:?}", result);
 }

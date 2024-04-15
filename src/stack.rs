@@ -59,18 +59,64 @@ pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
 }
 
 pub fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {
-    let mut res: HashMap<[u8; 26], Vec<String>> = HashMap::new();
-  
+    let hash_az: Vec<usize> = vec![0; 26];
+    let mut res: HashMap<Vec<u8>, Vec<String>> = HashMap::new();
     for str in strs {
-        let mut key = [0; 26];
-        for ch in str.chars() {
-          key[ch as usize - 97] += 1;
+        let char_vec: Vec<u8> = str.chars().map(|c| c as u8).collect();
+        let mut hash_az_copy = hash_az.clone();
+        for c in char_vec {
+            let acsii_a: u8 = b'a';
+            let diff = c as usize - acsii_a as usize;
+            hash_az_copy[diff] = hash_az_copy[diff] + 1
         }
-        if let Some(v) = res.get_mut(&key){
-            v.push(str)
-        }else{
-            res.insert(key, vec![str]);
+        let hash_key: Vec<u8> = hash_az_copy.iter().map(|x| *x as u8).collect();
+        match res.get_mut(&hash_key) {
+            Some(v) => v.push(str),
+            None => {
+                res.insert(hash_key, vec![str]);
+            }
         }
     }
-    res.into_values().collect()
+    res.into_iter().map(|(_, value)| value).collect()
+}
+
+pub fn top_k_frequent(nums: Vec<i32>, k: i32) -> Vec<i32> {
+    let mut freq = HashMap::new();
+    let mut bc_freq = vec![vec![]; nums.len() + 1];
+
+    for num in nums {
+        *freq.entry(num).or_insert(0) += 1;
+    }
+
+    for (n, c) in freq {
+        bc_freq[c].push(n);
+    }
+    let mut result = vec![];
+    for i in bc_freq.iter().rev() {
+        for &n in i {
+            result.push(n);
+        }
+        if result.len() == (k as usize) {
+            return result;
+        }
+    }
+    return result;
+}
+
+pub fn product_except_self(nums: Vec<i32>) -> Vec<i32> {
+    let k = nums.len();
+    let mut prefix = vec![1; k];
+    let mut suffix = vec![1; k];
+    let mut result = vec![1; k];
+    let mut j = k-1;
+    for index in 1..k{
+        prefix[index] = prefix[index-1] * nums[index-1];
+        suffix[j-1] = suffix[j] * nums[j];
+        j -= 1;
+    }
+    for i in 0..k{
+        result[i] = prefix[i]*suffix[i]
+    }
+
+    result
 }
