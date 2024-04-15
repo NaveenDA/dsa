@@ -39,17 +39,38 @@ pub fn is_anagram(s: String, t: String) -> bool {
     s_hash == t_hash
 }
 
+/**
+ * A function that will return index of the array where target is by adding two values
+ * of those incides
+ */
 pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
-    let mut num_map:HashMap<i32, i32> = HashMap::new();
+    let mut num_map: HashMap<i32, i32> = HashMap::new();
     let num_ref = &nums;
-   
-    for (i,el) in num_ref.into_iter().enumerate() {
+
+    for (i, el) in num_ref.into_iter().enumerate() {
         let current_tagert: i32 = target - el;
         let got_res = num_map.get(&current_tagert);
         match got_res {
             Some(val) => return vec![i as i32, *val],
-            None => num_map.insert( *el, i as i32)
+            None => num_map.insert(*el, i as i32),
         };
     }
     return vec![];
+}
+
+pub fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {
+    let mut res: HashMap<[u8; 26], Vec<String>> = HashMap::new();
+  
+    for str in strs {
+        let mut key = [0; 26];
+        for ch in str.chars() {
+          key[ch as usize - 97] += 1;
+        }
+        if let Some(v) = res.get_mut(&key){
+            v.push(str)
+        }else{
+            res.insert(key, vec![str]);
+        }
+    }
+    res.into_values().collect()
 }

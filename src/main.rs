@@ -16,4 +16,9 @@ fn main() {
 
     let result = stack::two_sum(vec![0,7,11,15,2], 9);
     println!("The result of two sum {:#?}", result);
+
+
+    let input: Vec<String> = vec![String::from("eat"),String::from("tea"),String::from("tan"),String::from("ate"),String::from("nat"),String::from("bat"),];
+    let result = stack::group_anagrams(input);
+    println!("The result of the group anagrams is {:#?}", result);
 }
