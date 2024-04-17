@@ -108,15 +108,39 @@ pub fn product_except_self(nums: Vec<i32>) -> Vec<i32> {
     let mut prefix = vec![1; k];
     let mut suffix = vec![1; k];
     let mut result = vec![1; k];
-    let mut j = k-1;
-    for index in 1..k{
-        prefix[index] = prefix[index-1] * nums[index-1];
-        suffix[j-1] = suffix[j] * nums[j];
+    let mut j = k - 1;
+    for index in 1..k {
+        prefix[index] = prefix[index - 1] * nums[index - 1];
+        suffix[j - 1] = suffix[j] * nums[j];
         j -= 1;
     }
-    for i in 0..k{
-        result[i] = prefix[i]*suffix[i]
+    for i in 0..k {
+        result[i] = prefix[i] * suffix[i]
     }
 
     result
 }
+pub fn group_anagramsx(strs: Vec<String>) -> Vec<Vec<String>> {
+    let mut main_map: HashMap<Vec<u8>, Vec<String>> = HashMap::new();
+    let az = vec![0; 26];
+
+    for str in strs {
+        let mut az_copy: Vec<u8> = az.clone();
+        let str_arr: Vec<u8> = str.chars().map(|x| x as u8).map(|x| x - 97).collect();
+        for ch in str_arr {
+            az_copy[ch as usize] += 1;
+        }
+
+        let haskey = main_map.get_mut(&az_copy);
+        match haskey {
+            None => {
+                main_map.insert(az_copy, vec![str]);
+            }
+            Some(v) => {
+                v.push(str);
+            }
+        }
+    }
+    main_map.into_values().collect()
+}
+
