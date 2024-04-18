@@ -57,7 +57,9 @@ pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
     }
     return vec![];
 }
-
+/**
+ * A function that will return the longest substring without repeating characters
+ */
 pub fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {
     let hash_az: Vec<usize> = vec![0; 26];
     let mut res: HashMap<Vec<u8>, Vec<String>> = HashMap::new();
@@ -80,6 +82,9 @@ pub fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {
     res.into_iter().map(|(_, value)| value).collect()
 }
 
+/**
+ * A function that will return the longest substring without repeating characters
+ */
 pub fn top_k_frequent(nums: Vec<i32>, k: i32) -> Vec<i32> {
     let mut freq = HashMap::new();
     let mut bc_freq = vec![vec![]; nums.len() + 1];
@@ -102,7 +107,9 @@ pub fn top_k_frequent(nums: Vec<i32>, k: i32) -> Vec<i32> {
     }
     return result;
 }
-
+/**
+ * A function that will return the longest substring without repeating characters
+ */
 pub fn product_except_self(nums: Vec<i32>) -> Vec<i32> {
     let k = nums.len();
     let mut prefix = vec![1; k];
@@ -120,7 +127,9 @@ pub fn product_except_self(nums: Vec<i32>) -> Vec<i32> {
 
     result
 }
-
+/**
+ * A function that will return the longest substring without repeating characters
+ */
 pub fn encode_string(inputs: Vec<String>) -> String {
     let mut output = String::new();
     for input in inputs {
@@ -130,7 +139,9 @@ pub fn encode_string(inputs: Vec<String>) -> String {
     }
     output
 }
-// strs = #3eat#3tea#3tan#3ate#3nat#3bat
+/**
+ * A function that will return the longest substring without repeating characters
+ */
 pub fn decode_string(strs: String) -> Vec<String> {
     let mut output: Vec<String> = vec![];
     let chars: Vec<char> = strs.chars().collect();
@@ -142,8 +153,8 @@ pub fn decode_string(strs: String) -> Vec<String> {
             j += 1;
         }
         let end = strs[i..j].parse().unwrap_or(0);
-        output.push(strs[j+1..j+1+end].into());
-        i = j+1+end;
+        output.push(strs[j + 1..j + 1 + end].into());
+        i = j + 1 + end;
     }
     output
 }
