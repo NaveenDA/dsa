@@ -125,7 +125,7 @@ pub fn encode_string(inputs: Vec<String>) -> String {
     let mut output = String::new();
     for input in inputs {
         let count = input.chars().count();
-        let new_string = format!("#{count}{input}").to_owned();
+        let new_string = format!("{count}#{input}").to_owned();
         output.push_str(&new_string);
     }
     output
@@ -137,20 +137,13 @@ pub fn decode_string(strs: String) -> Vec<String> {
     let mut i = 0;
     let count = chars.len();
     while i < count {
-        if chars[i] == '#' && chars[i + 1].is_numeric() {
-            let mut j = i + 1;
-            let mut length_str = String::new();
-            while j < count && chars[j].is_numeric() {
-                length_str.push(chars[j]);
-                j += 1;
-            }
-            let end = length_str.parse().unwrap_or(0);
-            let new_str: String = chars[j..(j + end)].into_iter().collect();
-            output.push(new_str);
-            i += end + 2;
-        } else {
-            i += 1;
+        let mut j = i;
+        while chars[j] != '#' {
+            j += 1;
         }
+        let end = strs[i..j].parse().unwrap_or(0);
+        output.push(strs[j+1..j+1+end].into());
+        i = j+1+end;
     }
     output
 }
