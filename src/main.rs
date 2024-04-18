@@ -30,4 +30,10 @@ fn main() {
 
     let result = stack::product_except_self(vec![1,2,3,4]);
     println!("The result of the product except itself is {:?}", result);
+
+    let input: Vec<String> = vec![String::from("eat"),String::from("tea"),String::from("tan"),String::from("ate"),String::from("nat from the world"),String::from("hello!f#2"),];
+    let output = stack::encode_string(input);
+    println!("The output of the encode string will be {:?}", output);
+    let output = stack::decode_string(output);
+    println!("The output of the decode string will be {:?}", output);
 }

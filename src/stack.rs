@@ -120,27 +120,37 @@ pub fn product_except_self(nums: Vec<i32>) -> Vec<i32> {
 
     result
 }
-pub fn group_anagramsx(strs: Vec<String>) -> Vec<Vec<String>> {
-    let mut main_map: HashMap<Vec<u8>, Vec<String>> = HashMap::new();
-    let az = vec![0; 26];
 
-    for str in strs {
-        let mut az_copy: Vec<u8> = az.clone();
-        let str_arr: Vec<u8> = str.chars().map(|x| x as u8).map(|x| x - 97).collect();
-        for ch in str_arr {
-            az_copy[ch as usize] += 1;
-        }
-
-        let haskey = main_map.get_mut(&az_copy);
-        match haskey {
-            None => {
-                main_map.insert(az_copy, vec![str]);
+pub fn encode_string(inputs: Vec<String>) -> String {
+    let mut output = String::new();
+    for input in inputs {
+        let count = input.chars().count();
+        let new_string = format!("#{count}{input}").to_owned();
+        output.push_str(&new_string);
+    }
+    output
+}
+// strs = #3eat#3tea#3tan#3ate#3nat#3bat
+pub fn decode_string(strs: String) -> Vec<String> {
+    let mut output: Vec<String> = vec![];
+    let chars: Vec<char> = strs.chars().collect();
+    let mut i = 0;
+    let count = chars.len();
+    while i < count {
+        if chars[i] == '#' && chars[i + 1].is_numeric() {
+            let mut j = i + 1;
+            let mut length_str = String::new();
+            while j < count && chars[j].is_numeric() {
+                length_str.push(chars[j]);
+                j += 1;
             }
-            Some(v) => {
-                v.push(str);
-            }
+            let end = length_str.parse().unwrap_or(0);
+            let new_str: String = chars[j..(j + end)].into_iter().collect();
+            output.push(new_str);
+            i += end + 2;
+        } else {
+            i += 1;
         }
     }
-    main_map.into_values().collect()
+    output
 }
-
