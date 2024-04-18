@@ -1,5 +1,6 @@
 use std::collections::{HashMap, HashSet};
 
+
 /**
  * This method is used to check a vec contains duplicates or not
  */
@@ -157,4 +158,42 @@ pub fn decode_string(strs: String) -> Vec<String> {
         i = j + 1 + end;
     }
     output
+}
+
+pub fn is_valid_sudoku(board: Vec<Vec<char>>) -> bool {
+    fn has_duplicates(list: &[&char]) -> bool {
+        let mut seen = vec![false; 10]; // Assuming digits are from 1 to 9
+        for &c in list {
+            if let Some(digit) = c.to_digit(10) {
+                if seen[digit as usize] {
+                    return true;
+                }
+                seen[digit as usize] = true;
+            }
+        }
+        false
+    }
+
+    let mut col_map: HashMap<usize, Vec<&char>> = HashMap::new();
+    let mut row_map: HashMap<usize, Vec<&char>> = HashMap::new();
+    let mut cell_map: HashMap<[usize; 2], Vec<&char>> = HashMap::new();
+    for (i, row) in board.iter().enumerate() {
+        for (j, cell) in row.iter().enumerate() {
+            if *cell == '.' {
+                continue;
+            }
+            let cell_key = [i / 3, j / 3];
+            col_map.entry(j).or_insert_with(Vec::new).push(cell);
+            row_map.entry(i).or_insert_with(Vec::new).push(cell);
+            cell_map.entry(cell_key).or_insert_with(Vec::new).push(cell);
+
+            if has_duplicates(&col_map[&j])
+                || has_duplicates(&row_map[&i])
+                || has_duplicates(&cell_map[&cell_key])
+            {
+                return false;
+            }
+        }
+    }
+    true
 }
