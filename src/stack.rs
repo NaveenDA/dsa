@@ -1,6 +1,5 @@
 use std::{cmp, collections::HashMap, vec};
 
-
 pub fn valid_parentheses(s: String) -> bool {
     let mut brackets: HashMap<char, char> = HashMap::new();
     brackets.insert(')', '(');
@@ -11,7 +10,7 @@ pub fn valid_parentheses(s: String) -> bool {
         let has_end: Option<&char> = brackets.get(&c);
         match has_end {
             Some(&v) => {
-                if ( stack.len() > 0 && stack[stack.len() - 1] != v) || stack.len() <= 0 {
+                if (stack.len() > 0 && stack[stack.len() - 1] != v) || stack.len() <= 0 {
                     return false;
                 }
                 stack.pop();
@@ -26,10 +25,10 @@ pub fn valid_parentheses(s: String) -> bool {
 
 pub struct MinStack {
     main: Vec<i32>,
-    min: Vec<i32>
+    min: Vec<i32>,
 }
 
-/** 
+/**
  * `&self` means the method takes an immutable reference.
  * If you need a mutable reference, change it to `&mut self` instead.
  */
@@ -37,37 +36,37 @@ impl MinStack {
     pub fn new() -> Self {
         Self {
             main: vec![],
-            min: vec![]
+            min: vec![],
         }
     }
-    
-pub fn push(&mut self, val: i32) {
+
+    pub fn push(&mut self, val: i32) {
         let last = self.min.last();
         let min = match last {
-            Some(&v)=>v,
-            None =>  val
+            Some(&v) => v,
+            None => val,
         };
         self.main.push(val);
         self.min.push(cmp::min(val, min));
     }
-    
-    pub fn pop(&mut self)->() {
+
+    pub fn pop(&mut self) -> () {
         self.min.pop();
         self.main.pop();
     }
-    
+
     pub fn top(&self) -> i32 {
         match self.main.last() {
-            Some(&v)=>v,
-            None=>0
+            Some(&v) => v,
+            None => 0,
         }
     }
-    
+
     pub fn get_min(&self) -> i32 {
         match self.min.last() {
-            Some(&v)=>v,
-            None=>0
-        } 
+            Some(&v) => v,
+            None => 0,
+        }
     }
 }
 

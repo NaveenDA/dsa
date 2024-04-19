@@ -12,5 +12,14 @@ fn main() {
     obj.pop();
     println!("{}", obj.top());
     println!("{}", obj.get_min());
-    println!("{}", stack::eval_rpn(vec![String::from("2"), String::from("1"), String::from("+"), String::from("3"), String::from("*")]))
+    println!(
+        "{}",
+        stack::eval_rpn(vec![
+            String::from("2"),
+            String::from("1"),
+            String::from("+"),
+            String::from("3"),
+            String::from("*")
+        ])
+    )
 }
