@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
-use std::{cmp, collections::{HashMap, HashSet}};
+use std::collections::{HashMap, HashSet};
 /**
  * This method is used to check a vec contains duplicates or not
  */
