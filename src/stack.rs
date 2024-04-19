@@ -1,5 +1,6 @@
 use std::{cmp, collections::HashMap, vec};
 
+
 pub fn valid_parentheses(s: String) -> bool {
     let mut brackets: HashMap<char, char> = HashMap::new();
     brackets.insert(')', '(');
@@ -70,3 +71,24 @@ pub fn push(&mut self, val: i32) {
     }
 }
 
+pub fn eval_rpn(tokens: Vec<String>) -> i32 {
+    let mut stack = vec![];
+    for token in tokens {
+        match token.as_str() {
+            "+" | "-" | "*" | "/" => {
+                let b = stack.pop().unwrap_or_default();
+                let a = stack.pop().unwrap_or_default();
+                let result = match token.as_str() {
+                    "+" => a + b,
+                    "-" => a - b,
+                    "*" => a * b,
+                    "/" => a / b,
+                    _ => 0,
+                };
+                stack.push(result);
+            }
+            _ => stack.push(token.parse().unwrap_or_default()),
+        }
+    }
+    stack.last().copied().unwrap_or_default()
+}
