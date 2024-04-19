@@ -1,6 +1,6 @@
-use std::collections::{HashMap, HashSet};
-
-
+#![allow(dead_code)]
+#![allow(unused_variables)]
+use std::{cmp, collections::{HashMap, HashSet}};
 /**
  * This method is used to check a vec contains duplicates or not
  */
@@ -196,4 +196,24 @@ pub fn is_valid_sudoku(board: Vec<Vec<char>>) -> bool {
         }
     }
     true
+}
+
+pub fn longest_consecutive(nums: Vec<i32>) -> i32 {
+    let num_set: HashSet<i32> = nums.into_iter().collect();
+    let mut max_len = 0;
+
+    for &num in &num_set {
+        if !num_set.contains(&(num - 1)) {
+            let mut current_num = num;
+            let mut current_len = 1;
+
+            while num_set.contains(&(current_num + 1)) {
+                current_num += 1;
+                current_len += 1;
+            }
+
+            max_len = max_len.max(current_len);
+        }
+    }
+    max_len
 }
