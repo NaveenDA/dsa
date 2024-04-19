@@ -159,8 +159,11 @@ pub fn decode_string(strs: String) -> Vec<String> {
     }
     output
 }
-
+/**
+ * A function that will return the longest substring without repeating characters
+ */
 pub fn is_valid_sudoku(board: Vec<Vec<char>>) -> bool {
+    // Check if a list has duplicates
     fn has_duplicates(list: &[&char]) -> bool {
         let mut seen = vec![false; 10]; // Assuming digits are from 1 to 9
         for &c in list {
@@ -197,7 +200,9 @@ pub fn is_valid_sudoku(board: Vec<Vec<char>>) -> bool {
     }
     true
 }
-
+/**
+ * A function that will return the longest substring without repeating characters
+ */
 pub fn longest_consecutive(nums: Vec<i32>) -> i32 {
     let num_set: HashSet<i32> = nums.into_iter().collect();
     let mut max_len = 0;
