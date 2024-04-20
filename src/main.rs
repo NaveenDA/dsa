@@ -21,5 +21,7 @@ fn main() {
             String::from("3"),
             String::from("*")
         ])
-    )
+    );
+
+    println!("{:?}", stack::generate_parenthesis(3));
 }

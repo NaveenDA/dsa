@@ -91,3 +91,22 @@ pub fn eval_rpn(tokens: Vec<String>) -> i32 {
     }
     stack.last().copied().unwrap_or_default()
 }
+
+pub fn generate_parenthesis(n: i32) -> Vec<String> {
+    let mut stack: Vec<String> = vec![];
+    fn backtrack(n: i32, stack: &mut Vec<String>, combination: String, nopen: i32, nclose: i32) {
+        if nopen == nclose && nopen == n {
+            stack.push(combination);
+            return;
+        }
+        if nopen < n {
+            backtrack(n, stack, combination.clone() + "(", nopen + 1, nclose);
+        }
+        if nopen > nclose {
+            backtrack(n, stack, combination + ")", nopen, nclose + 1)
+        }
+    }
+    backtrack(n, &mut stack, String::new(), 0, 0);
+    stack
+}
+
