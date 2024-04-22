@@ -110,3 +110,28 @@ pub fn generate_parenthesis(n: i32) -> Vec<String> {
     stack
 }
 
+pub fn car_fleet(target: i32, position: Vec<i32>, speed: Vec<i32>) -> i32 {
+    let mut cars: Vec<[i32; 2]> = position
+        .iter()
+        .zip(speed.iter())
+        .map(|(&p, &s)| [p, s])
+        .collect();
+    let mut stack: Vec<f64> = vec![];
+    cars.sort_by_key(|&car| car[0]);
+    cars.reverse();
+    for [p, s] in cars {
+        let time =(target - p) as f64 / s as f64;
+        if let Some(&last) = stack.last() {
+            if time > last {
+                stack.push(time);
+            }
+        } else {
+            stack.push(time);
+        }
+    }
+    stack.len() as i32
+}
+
+// car_fleet(10, vec![6,8],vec![3,2]) 
+// expected:2
+// result:1

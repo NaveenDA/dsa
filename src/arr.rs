@@ -55,7 +55,7 @@ pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
             None => num_map.insert(*el, i as i32),
         };
     }
-    return vec![];
+    vec![]
 }
 /**
  * A function that will return the longest substring without repeating characters
@@ -105,7 +105,7 @@ pub fn top_k_frequent(nums: Vec<i32>, k: i32) -> Vec<i32> {
             return result;
         }
     }
-    return result;
+    result
 }
 /**
  * A function that will return the longest substring without repeating characters
@@ -162,39 +162,25 @@ pub fn decode_string(strs: String) -> Vec<String> {
  * A function that will return the longest substring without repeating characters
  */
 pub fn is_valid_sudoku(board: Vec<Vec<char>>) -> bool {
-    // Check if a list has duplicates
-    fn has_duplicates(list: &[&char]) -> bool {
-        let mut seen = vec![false; 10]; // Assuming digits are from 1 to 9
-        for &c in list {
-            if let Some(digit) = c.to_digit(10) {
-                if seen[digit as usize] {
-                    return true;
-                }
-                seen[digit as usize] = true;
-            }
-        }
-        false
-    }
+    let mut row = vec![vec![false; 9]; 9];
+    let mut col = vec![vec![false; 9]; 9];
+    let mut boxs = vec![vec![false; 9]; 9];
 
-    let mut col_map: HashMap<usize, Vec<&char>> = HashMap::new();
-    let mut row_map: HashMap<usize, Vec<&char>> = HashMap::new();
-    let mut cell_map: HashMap<[usize; 2], Vec<&char>> = HashMap::new();
-    for (i, row) in board.iter().enumerate() {
-        for (j, cell) in row.iter().enumerate() {
-            if *cell == '.' {
+    for i in 0..9 {
+        for j in 0..9 {
+            if board[i][j] == '.' {
                 continue;
             }
-            let cell_key = [i / 3, j / 3];
-            col_map.entry(j).or_insert_with(Vec::new).push(cell);
-            row_map.entry(i).or_insert_with(Vec::new).push(cell);
-            cell_map.entry(cell_key).or_insert_with(Vec::new).push(cell);
-
-            if has_duplicates(&col_map[&j])
-                || has_duplicates(&row_map[&i])
-                || has_duplicates(&cell_map[&cell_key])
-            {
+            let num = board[i][j] as usize - '1' as usize;
+            // the reason why we use -1 above is to get the index of the number
+            // in the array,i.e 1 will be 0, 2 will be 1 and so on
+            let k = i / 3 * 3 + j / 3;
+            if row[i][num] || col[j][num] || boxs[k][num] {
                 return false;
             }
+            row[i][num] = true;
+            col[j][num] = true;
+            boxs[k][num] = true;
         }
     }
     true

@@ -24,4 +24,6 @@ fn main() {
     );
 
     println!("{:?}", stack::generate_parenthesis(3));
+
+    println!("{}", stack::car_fleet(10, vec![6, 8], vec![3, 2]));
 }
