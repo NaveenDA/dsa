@@ -1,5 +1,9 @@
+#![allow(dead_code)]
 use std::{cmp, collections::HashMap, vec};
 
+/**
+* A function to check if a string has valid parentheses
+ */
 pub fn valid_parentheses(s: String) -> bool {
     let mut brackets: HashMap<char, char> = HashMap::new();
     brackets.insert(')', '(');
@@ -23,6 +27,9 @@ pub fn valid_parentheses(s: String) -> bool {
     stack.len() == 0
 }
 
+/**
+* A function to check if a string has valid parentheses
+ */
 pub struct MinStack {
     main: Vec<i32>,
     min: Vec<i32>,
@@ -39,7 +46,6 @@ impl MinStack {
             min: vec![],
         }
     }
-
     pub fn push(&mut self, val: i32) {
         let last = self.min.last();
         let min = match last {
@@ -49,19 +55,16 @@ impl MinStack {
         self.main.push(val);
         self.min.push(cmp::min(val, min));
     }
-
     pub fn pop(&mut self) -> () {
         self.min.pop();
         self.main.pop();
     }
-
     pub fn top(&self) -> i32 {
         match self.main.last() {
             Some(&v) => v,
             None => 0,
         }
     }
-
     pub fn get_min(&self) -> i32 {
         match self.min.last() {
             Some(&v) => v,
@@ -70,6 +73,9 @@ impl MinStack {
     }
 }
 
+/**
+* A function to evaluate reverse polish notation
+ */
 pub fn eval_rpn(tokens: Vec<String>) -> i32 {
     let mut stack = vec![];
     for token in tokens {
@@ -92,6 +98,9 @@ pub fn eval_rpn(tokens: Vec<String>) -> i32 {
     stack.last().copied().unwrap_or_default()
 }
 
+/**
+* A function to generate parenthesis
+ */
 pub fn generate_parenthesis(n: i32) -> Vec<String> {
     let mut stack: Vec<String> = vec![];
     fn backtrack(n: i32, stack: &mut Vec<String>, combination: String, nopen: i32, nclose: i32) {
@@ -110,6 +119,9 @@ pub fn generate_parenthesis(n: i32) -> Vec<String> {
     stack
 }
 
+/**
+* A function to check if a string is a valid number
+ */
 pub fn car_fleet(target: i32, position: Vec<i32>, speed: Vec<i32>) -> i32 {
     let mut cars: Vec<[i32; 2]> = position
         .iter()
@@ -120,7 +132,7 @@ pub fn car_fleet(target: i32, position: Vec<i32>, speed: Vec<i32>) -> i32 {
     cars.sort_by_key(|&car| car[0]);
     cars.reverse();
     for [p, s] in cars {
-        let time =(target - p) as f64 / s as f64;
+        let time = (target - p) as f64 / s as f64;
         if let Some(&last) = stack.last() {
             if time > last {
                 stack.push(time);
@@ -132,6 +144,29 @@ pub fn car_fleet(target: i32, position: Vec<i32>, speed: Vec<i32>) -> i32 {
     stack.len() as i32
 }
 
-// car_fleet(10, vec![6,8],vec![3,2]) 
-// expected:2
-// result:1
+/**
+ *  A function to calculate the largest rectangle area
+ */
+pub fn largest_rectangle_area(heights: Vec<i32>) -> i32 {
+    let mut maxarea = 0;
+    let mut stack: Vec<(usize, i32)> = Vec::new();
+    for (i, &h) in heights.iter().enumerate() {
+        let mut start = i;
+        // Pop elements from the stack as long as the top element has greater height
+        while let Some(&(index, height)) = stack.last() {
+            if height > h {
+                stack.pop();
+                maxarea = maxarea.max(height * (i - index) as i32);
+                start = index;
+            } else {
+                break;
+            }
+        }
+        stack.push((start, h));
+    }
+    // Calculate the remaining maximum areas
+    while let Some((index, height)) = stack.pop() {
+        maxarea = maxarea.max(height * (heights.len() - index) as i32);
+    }
+    maxarea
+}

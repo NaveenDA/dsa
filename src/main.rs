@@ -1,29 +1,10 @@
+use std::time::Instant;
+
 mod arr;
 mod stack;
 fn main() {
-    let output = stack::valid_parentheses(String::from("]"));
-    println!("{}", output);
-    //  Your MinStack object will be instantiated and called as such:
-    let mut obj: stack::MinStack = stack::MinStack::new();
-    obj.push(-2);
-    obj.push(0);
-    obj.push(-3);
-    println!("{}", obj.get_min());
-    obj.pop();
-    println!("{}", obj.top());
-    println!("{}", obj.get_min());
-    println!(
-        "{}",
-        stack::eval_rpn(vec![
-            String::from("2"),
-            String::from("1"),
-            String::from("+"),
-            String::from("3"),
-            String::from("*")
-        ])
-    );
+   let now  = Instant::now();
+   let elapsed = now.elapsed();
 
-    println!("{:?}", stack::generate_parenthesis(3));
-
-    println!("{}", stack::car_fleet(10, vec![6, 8], vec![3, 2]));
+   println!("The time diff is {:?}", elapsed);
 }
