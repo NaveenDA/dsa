@@ -1,9 +1,8 @@
 use std::cmp::Ordering::{Equal, Greater, Less};
-
 /**
 * A function that checks if a string is a palindrome
 */
-pub fn is_palindrome(s: String) -> bool {
+pub fn _is_palindrome(s: String) -> bool {
     let str: Vec<char> = s.chars().collect();
     let mut i = 0;
     let mut j = s.len() - 1;
@@ -41,3 +40,4 @@ pub fn two_sum(numbers: Vec<i32>, target: i32) -> Vec<i32> {
     }
     return vec![-1, -1];
 }
+
